@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hitter Data</title>
+</head>
+<body>
+    <h1>Hitter Data</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, hitter in hitters.items() %}
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ hitter.firstName }}</td>
+                <td>{{ hitter.lastName }}</td>
+                <td>{{ hitter.team }}</td>
+                <td><a href="{{ url_for('main.playerpage', hitter_id=id) }}">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
