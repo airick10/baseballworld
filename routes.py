@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort, render_template
+from flask import Blueprint, render_template, request, abort, current_app
 from .services import load_hitters
 
 
@@ -20,3 +20,14 @@ def playerpage():
     if not hitter_id:
         abort(404)
     return render_template("playerpage.html", hitter_id=hitter_id)
+
+@main.route("/playerpagefull", methods=["POST"])
+def playerpagefull():
+    hitter_id = request.form.get("hitter_id")
+    if not hitter_id:
+        abort(400)
+    hitters = load_hitters()
+    hitter = hitters.get(hitter_id)   # <-- no int()
+    if not hitter:
+        abort(404)
+    return render_template("playerpagefull.html", hitter=hitter)

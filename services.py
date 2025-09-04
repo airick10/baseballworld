@@ -12,9 +12,5 @@ def load_hitters():
 
     extracted_data = {}
     for hitter in parsed_json:
-        extracted_data[hitter['ID']] = {
-            'firstName': hitter['FirstName'],
-            'lastName': hitter['LastName'],
-            'team': hitter['s_team']
-        }
+        extracted_data[hitter["ID"]] = hitter
     return extracted_data
