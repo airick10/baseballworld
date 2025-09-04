@@ -85,7 +85,7 @@
   },
   {
     "ID": "2",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Abreu",
     "Nickname": "Oso",
     "Height": "6'3",
@@ -260,7 +260,7 @@
   {
     "ID": "4",
     "FirstName": "Ronald",
-    "LastName": "Acu a",
+    "LastName": "Acuña",
     "Nickname": "Sabanero Soy",
     "Height": "6'0",
     "Weight_lb": "205",
@@ -866,7 +866,7 @@
   },
   {
     "ID": "11",
-    "FirstName": "Mois s",
+    "FirstName": "Moisés",
     "LastName": "Alou",
     "Nickname": "N/A",
     "Height": "6'3",
@@ -2245,7 +2245,7 @@
   {
     "ID": "27",
     "FirstName": "Javier",
-    "LastName": "B ez",
+    "LastName": "Báez",
     "Nickname": "Javy",
     "Height": "5'11",
     "Weight_lb": "190",
@@ -3105,7 +3105,7 @@
   },
   {
     "ID": "37",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Bautista",
     "Nickname": "Joey Bats",
     "Height": "6'0",
@@ -3629,7 +3629,7 @@
   {
     "ID": "43",
     "FirstName": "Carlos",
-    "LastName": "Beltr n",
+    "LastName": "Beltrán",
     "Nickname": "Ivan",
     "Height": "6'1",
     "Weight_lb": "215",
@@ -3719,7 +3719,7 @@
   {
     "ID": "44",
     "FirstName": "Adrian",
-    "LastName": "Beltr ",
+    "LastName": "Beltré",
     "Nickname": "El Koja",
     "Height": "5'11",
     "Weight_lb": "220",
@@ -4148,7 +4148,7 @@
   },
   {
     "ID": "49",
-    "FirstName": "Ger nimo",
+    "FirstName": "Gerónimo",
     "LastName": "Berroa",
     "Nickname": "The Chief",
     "Height": "6'0",
@@ -7959,7 +7959,7 @@
   },
   {
     "ID": "93",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Canseco",
     "Nickname": "The Chemist",
     "Height": "6'4",
@@ -8827,8 +8827,8 @@
   },
   {
     "ID": "103",
-    "FirstName": "C sar",
-    "LastName": "Cede o",
+    "FirstName": "César",
+    "LastName": "Cedeño",
     "Nickname": "N/A",
     "Height": "6'2",
     "Weight_lb": "175",
@@ -9004,7 +9004,7 @@
   {
     "ID": "105",
     "FirstName": "Yoenis",
-    "LastName": "C spedes",
+    "LastName": "Céspedes",
     "Nickname": "La Potencia",
     "Height": "5'11",
     "Weight_lb": "225",
@@ -9432,7 +9432,7 @@
   {
     "ID": "110",
     "FirstName": "Eric",
-    "LastName": "Ch vez",
+    "LastName": "Chávez",
     "Nickname": "Chavvy",
     "Height": "6'1",
     "Weight_lb": "215",
@@ -10818,7 +10818,7 @@
   {
     "ID": "126",
     "FirstName": "Dave",
-    "LastName": "Concepci n",
+    "LastName": "Concepción",
     "Nickname": "El Rey David",
     "Height": "6'2",
     "Weight_lb": "155",
@@ -11940,7 +11940,7 @@
   },
   {
     "ID": "139",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Cruz",
     "Nickname": "N/A",
     "Height": "6'0",
@@ -12026,7 +12026,7 @@
   },
   {
     "ID": "140",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Cruz, Jr",
     "Nickname": "Cheo",
     "Height": "6'0",
@@ -13417,7 +13417,7 @@
   },
   {
     "ID": "156",
-    "FirstName": "Mart n",
+    "FirstName": "Martín",
     "LastName": "Dihigo",
     "Nickname": "El Maestro",
     "Height": "6'2",
@@ -14975,7 +14975,7 @@
   {
     "ID": "174",
     "FirstName": "Edwin",
-    "LastName": "Encarnaci n",
+    "LastName": "Encarnación",
     "Nickname": "EE",
     "Height": "6'1",
     "Weight_lb": "230",
@@ -15499,7 +15499,7 @@
   {
     "ID": "180",
     "FirstName": "Tony",
-    "LastName": "Fern ndez",
+    "LastName": "Fernández",
     "Nickname": "Cabeza or  El Fantasma",
     "Height": "6'2",
     "Weight_lb": "165",
@@ -17324,7 +17324,7 @@
   },
   {
     "ID": "201",
-    "FirstName": "Andr s",
+    "FirstName": "Andrés",
     "LastName": "Galarraga",
     "Nickname": "Big Cat",
     "Height": "6'3",
@@ -18532,8 +18532,8 @@
   },
   {
     "ID": "215",
-    "FirstName": "Adri n",
-    "LastName": "Gonz lez",
+    "FirstName": "Adrián",
+    "LastName": "González",
     "Nickname": "El Titan",
     "Height": "6'2",
     "Weight_lb": "215",
@@ -18621,7 +18621,7 @@
   {
     "ID": "216",
     "FirstName": "Carlos",
-    "LastName": "Gonz lez",
+    "LastName": "González",
     "Nickname": "Cargo",
     "Height": "6'1",
     "Weight_lb": "220",
@@ -18708,7 +18708,7 @@
   {
     "ID": "217",
     "FirstName": "Juan",
-    "LastName": "Gonz lez",
+    "LastName": "González",
     "Nickname": "Juan Gone",
     "Height": "6'3",
     "Weight_lb": "175",
@@ -30175,7 +30175,7 @@
   {
     "ID": "350",
     "FirstName": "Edgar",
-    "LastName": "Mart nez",
+    "LastName": "Martínez",
     "Nickname": "Gar",
     "Height": "6'0",
     "Weight_lb": "175",
@@ -31973,8 +31973,8 @@
   },
   {
     "ID": "371",
-    "FirstName": "Jos ",
-    "LastName": "M ndez",
+    "FirstName": "José",
+    "LastName": "Méndez",
     "Nickname": "El Diamante Negro",
     "Height": "5'10",
     "Weight_lb": "152",
@@ -32145,7 +32145,7 @@
   {
     "ID": "373",
     "FirstName": "Minnie",
-    "LastName": "Mi oso",
+    "LastName": "Miñoso",
     "Nickname": "Cuban Comet",
     "Height": "5'10",
     "Weight_lb": "175",
@@ -34306,7 +34306,7 @@
   {
     "ID": "398",
     "FirstName": "Magglio",
-    "LastName": "Ord  ez",
+    "LastName": "Ordóñez",
     "Nickname": "N/A",
     "Height": "6'0",
     "Weight_lb": "215",
@@ -35168,7 +35168,7 @@
   {
     "ID": "408",
     "FirstName": "Tony",
-    "LastName": "Pe a",
+    "LastName": "Peña",
     "Nickname": "N/A",
     "Height": "6'0",
     "Weight_lb": "175",
@@ -36989,7 +36989,7 @@
   {
     "ID": "429",
     "FirstName": "Hanley",
-    "LastName": "Ram rez",
+    "LastName": "Ramírez",
     "Nickname": "El Nino",
     "Height": "6'2",
     "Weight_lb": "235",
@@ -37076,7 +37076,7 @@
   {
     "ID": "430",
     "FirstName": "Aramis",
-    "LastName": "Ram rez",
+    "LastName": "Ramírez",
     "Nickname": "N/A",
     "Height": "6'1",
     "Weight_lb": "205",
@@ -37161,8 +37161,8 @@
   },
   {
     "ID": "431",
-    "FirstName": "Jos ",
-    "LastName": "Ram rez",
+    "FirstName": "José",
+    "LastName": "Ramírez",
     "Nickname": "J-Ram",
     "Height": "5'8",
     "Weight_lb": "190",
@@ -37593,8 +37593,8 @@
   },
   {
     "ID": "436",
-    "FirstName": " dgar",
-    "LastName": "Renter a",
+    "FirstName": "Édgar",
+    "LastName": "Rentería",
     "Nickname": "N/A",
     "Height": "6'1",
     "Weight_lb": "200",
@@ -37683,7 +37683,7 @@
   },
   {
     "ID": "437",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Reyes",
     "Nickname": "La Melaza",
     "Height": "6'0",
@@ -38791,8 +38791,8 @@
   },
   {
     "ID": "450",
-    "FirstName": "Iv n",
-    "LastName": "Rodr guez",
+    "FirstName": "Iván",
+    "LastName": "Rodríguez",
     "Nickname": "Pudge",
     "Height": "5'9",
     "Weight_lb": "205",
@@ -38880,8 +38880,8 @@
   },
   {
     "ID": "451",
-    "FirstName": " lex",
-    "LastName": "Rodr guez",
+    "FirstName": "Álex",
+    "LastName": "Rodríguez",
     "Nickname": "A-Rod",
     "Height": "6'3",
     "Weight_lb": "230",
@@ -38967,7 +38967,7 @@
   {
     "ID": "452",
     "FirstName": "Henry",
-    "LastName": "Rodr guez",
+    "LastName": "Rodríguez",
     "Nickname": "Oh Henry!",
     "Height": "6'1",
     "Weight_lb": "180",
@@ -39055,7 +39055,7 @@
   {
     "ID": "453",
     "FirstName": "Julio",
-    "LastName": "Rodr guez",
+    "LastName": "Rodríguez",
     "Nickname": "J-Rod",
     "Height": "6'3",
     "Weight_lb": "228",
@@ -40426,7 +40426,7 @@
   {
     "ID": "469",
     "FirstName": "Manny",
-    "LastName": "Sanguill n",
+    "LastName": "Sanguillén",
     "Nickname": "Sangy",
     "Height": "6'0",
     "Weight_lb": "193",
@@ -44833,7 +44833,7 @@
   {
     "ID": "520",
     "FirstName": "Fernando",
-    "LastName": "Tat s",
+    "LastName": "Tatís",
     "Nickname": "N/A",
     "Height": "5'11",
     "Weight_lb": "185",
@@ -44921,7 +44921,7 @@
   {
     "ID": "521",
     "FirstName": "Fernando",
-    "LastName": "Tat s Jr.",
+    "LastName": "Tatís Jr.",
     "Nickname": "El Ni o",
     "Height": "6'3",
     "Weight_lb": "217",
@@ -47580,7 +47580,7 @@
   },
   {
     "ID": "552",
-    "FirstName": "Jos ",
+    "FirstName": "José",
     "LastName": "Vidro",
     "Nickname": "N/A",
     "Height": "5'11",

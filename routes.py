@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, current_app
-from .services import load_hitters
+from .services import load_hitters, load_pitchers
 
 
 
@@ -13,6 +13,11 @@ def index():
 def json():
     hitters = load_hitters()
     return render_template("json.html", hitters=hitters)
+
+@main.route("/pitcherjson")
+def pitcherjson():
+    pitchers = load_pitchers()
+    return render_template("pitcherjson.html", pitchers=pitchers)
 
 @main.route("/playerpage")
 def playerpage():
