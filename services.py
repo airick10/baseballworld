@@ -3,8 +3,8 @@ import json
 from pathlib import Path
 from functools import lru_cache
 
-input_file = Path(__file__).with_name("alltimebatters.json")
-input_file_p = Path(__file__).with_name("alltimepitchers.json")
+input_file = Path(__file__).with_name("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimebatters.json")
+input_file_p = Path(__file__).with_name("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimepitchers.json")
 
 def load_hitters():
 
