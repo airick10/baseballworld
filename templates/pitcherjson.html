@@ -2,10 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Hitter Data</title>
+    <title>Pitcher Data</title>
 </head>
 <body>
-    <h1>Hitter Data</h1>
+    <h1>Pitcher Data</h1>
     <table border="1">
         <thead>
             <tr>
@@ -16,12 +16,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for id, hitter in hitters.items() %}
+            {% for id, pitcher in pitchers.items() %}
             <tr>
                 <td>{{ id }}</td>
-                <td>{{ hitter.FirstName }}</td>
-                <td>{{ hitter.LastName }}</td>
-                <td>{{ hitter.s_team }}</td>
+                <td>{{ pitcher.FirstName }}</td>
+                <td>{{ pitcher.LastName }}</td>
+                <td>{{ pitcher.s_team }}</td>
                 <td><a href="{{ url_for('main.playerpage', hitter_id=id) }}">View</a></td>
                 <td>
                     <form action="{{ url_for('main.playerpagefull') }}" method="post">
