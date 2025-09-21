@@ -2,26 +2,49 @@ from flask import Flask
 import json
 from pathlib import Path
 from functools import lru_cache
+from operator import itemgetter
 
-input_file = Path(__file__).with_name("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimebatters.json")
-input_file_p = Path(__file__).with_name("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimepitchers.json")
+input_file_h = Path(__file__).with_name("alltimebatters.json")
+input_file_p = Path(__file__).with_name("alltimepitchers.json")
 
 def load_hitters():
-
-    with open(input_file, encoding="utf-8") as json_file:
-        parsed_json = json.load(json_file)
-
-    extracted_data = {}
-    for hitter in parsed_json:
-        extracted_data[hitter["ID"]] = hitter
-    return extracted_data
+    with input_file_h.open(encoding="utf-8") as f:
+        parsed = json.load(f)
+    # dict keyed by string ID (as in your JSON)
+    return {h["ID"]: h for h in parsed}
 
 def load_pitchers():
+    with input_file_p.open(encoding="utf-8") as f:
+        parsed = json.load(f)
+    return {p["ID"]: p for p in parsed}
 
-    with open(input_file_p, encoding="utf-8") as json_file:
-        parsed_json = json.load(json_file)
+def load_people():
+    """Combine hitters and pitchers into a single sorted LIST."""
+    hitters = load_hitters()
+    pitchers = load_pitchers()
 
-    extracted_data = {}
-    for pitcher in parsed_json:
-        extracted_data[pitcher["ID"]] = pitcher
-    return extracted_data
+    people = []
+    for _id, h in hitters.items():
+        people.append({
+            "kind": "hitter",
+            "id": _id,                 # keep as string to match your dict keys
+            **h
+        })
+    for _id, p in pitchers.items():
+        people.append({
+            "kind": "pitcher",
+            "id": _id,
+            **p
+        })
+
+    # Sort by LastName then FirstName; missing keys fall back to ""
+    people.sort(key=lambda r: (r.get("LastName", ""), r.get("FirstName", "")))
+    return people
+
+def get_person(kind: str, _id: str):
+    """Lookup helper for detail pages."""
+    if kind == "hitter":
+        return load_hitters().get(_id)
+    if kind == "pitcher":
+        return load_pitchers().get(_id)
+    return None
