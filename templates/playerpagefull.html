@@ -1,19 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Player Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Texturina:ital,opsz,wght@0,12..72,100..900;1,12..72,100..900&display=swap" rel="stylesheet">
+  <title>Player Page</title>
+
+  {% set first = person.get('FirstName','') %}
+  {% set last  = person.get('LastName','') %}
+  {% set teams = person.get('s_mlbteam', []) %}
+  {% set primary_team = teams[0] if teams else '' %}
+  {% set folder = 'Hitters' if kind == 'hitter' else 'Pitchers' %}
+
+  <style>
+    .background_photo {
+      background-image: url("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Photos/{{ folder }}/landscapes/{{ first }}_{{ last }}.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 500px;
+      position: relative;
+    }
+    .background_photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .small_background_photo {
+      background-image: url("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Photos/{{ folder }}/{{ first }}_{{ last }}.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 400px;
+    }
+    .texturina-SemiBold {
+      font-family: "Texturina", serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+    }
+    .photo_text_size { font-size: 55px; }
+  </style>
 </head>
 <body>
-    
-    <h1>{{ hitter.FirstName }}</h1>
-    <p>
-    <h1>{{ hitter.s_fielding }}</h1>   
-    <p>
-    <h1>{{ hitter.s_mlbteam[0] }}</h1>
-    <hr>
-    <h1>{{ hitter.s_mlbteam }}</h1>
 
+  <div class="container-fluid">
+    <div class="row align-items-start playerheader {{ primary_team }}_color">
+      <div class="col-2 text-start">Player A</div>
+      <div class="col-8 text-center">All Time Players</div>
+      <div class="col-2 text-end">Player B</div>
+    </div>
+  </div>
 
-            
+  <div class="container-fluid">
+    <div class="row background_photo d-flex justify-content-center align-items-end text-warning text-center opacity-50">
+      <div class="col-12 photo_text_size texturina-SemiBold position-relative">
+        <b>{{ first }} {{ last }}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row justify-content-center" style="height: 75px;">
+      {% for team in teams %}
+      <div class="col-1">
+        <img src="https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Logos/hats/{{ team }}.png" height="75" alt="{{ team }}">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row align-items-start {{ primary_team }}_color">
+      <div class="col-2 small_background_photo text-start">&nbsp;</div>
+      <div class="col-10">
+        <!-- Example quick facts; show if present -->
+        <div class="p-3">
+          <h3 class="mb-3">{{ kind|title }}</h3>
+          <p class="mb-1"><b>ID:</b> {{ pid }}</p>
+          {% if person.get('s_team') %}<p class="mb-1"><b>Card Team:</b> {{ person['s_team'] }}</p>{% endif %}
+          {% if person.get('Position') %}<p class="mb-1"><b>Position:</b> {{ person['Position'] }}</p>{% endif %}
+          {% if person.get('Throws') %}<p class="mb-1"><b>Throws:</b> {{ person['Throws'] }}</p>{% endif %}
+          {% if person.get('Bats') %}<p class="mb-1"><b>Bats:</b> {{ person['Bats'] }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug / flexible dump: table of all key-values -->
+  <div class="container my-4">
+    <h4>All Fields</h4>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped">
+        <tbody>
+          {% for k, v in person.items() %}
+          <tr>
+            <th class="text-nowrap">{{ k }}</th>
+            <td>
+              {% if v is iterable and v is not string %}
+                {{ v | join(', ') if v is sequence else v }}
+              {% else %}
+                {{ v }}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </body>
 </html>

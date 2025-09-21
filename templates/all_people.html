@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>All Players</title>
+</head>
+<body>
+  <h1>All Players</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Kind</th>
+        <th>ID</th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Team</th>
+        <th>View</th>
+        <th>Full</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in people %}
+      <tr>
+        <td>{{ p.kind }}</td>
+        <td>{{ p.id }}</td>
+        <td>{{ p.get('FirstName', '') }}</td>
+        <td>{{ p.get('LastName', '') }}</td>
+        <td>{{ p.get('s_team', '') }}</td>
+
+        <!-- GET view: kind + id as query params -->
+        <td>
+          <a href="{{ url_for('main.playerpage', kind=p.kind, id=p.id) }}">View</a>
+        </td>
+
+        <!-- POST full: kind + id in form body -->
+        <td>
+          <form action="{{ url_for('main.playerpagefull') }}" method="post">
+            <input type="hidden" name="kind" value="{{ p.kind }}">
+            <input type="hidden" name="id"   value="{{ p.id }}">
+            <button type="submit">Full</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
