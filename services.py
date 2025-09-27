@@ -92,3 +92,12 @@ def positions(fielding: str):
             return "Closing Pitcher"
         case _:
             return "Designated Hitter"
+
+def sort_people(stat: str, people: dict):
+
+    if (stat != "p_earned_run_avg" and stat != "p_whip" and stat != "p_bb_per_nine"):
+        people.sort(key=lambda r: float(r.get(stat, 0) or 0), reverse=True)
+    else:
+        people.sort(key=lambda r: float(r.get(stat, 0) or 0))
+
+    return people

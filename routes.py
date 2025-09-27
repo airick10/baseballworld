@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, current_app
-from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions
+from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions, sort_people
 
 
 
@@ -14,6 +14,42 @@ def index():
 def all_people():
     people = load_people()
     return render_template("all_people.html", people=people)
+
+@main.route("/hit_stats")
+def hit_stats():
+    stat = request.args.get("stat")
+    if not stat:
+        stat = "_id"
+    people = load_people()
+    people = sort_people(stat, people)
+    return render_template("hit_stats.html", people=people)
+
+@main.route("/pit_stats")
+def pit_stats():
+    stat = request.args.get("stat")
+    if not stat:
+        stat = "_id"
+    people = load_people()
+    people = sort_people(stat, people)
+    return render_template("pit_stats.html", people=people)
+
+@main.route("/hit_strat")
+def hit_strat():
+    stat = request.args.get("stat")
+    if not stat:
+        stat = "_id"
+    people = load_people()
+    people = sort_people(stat, people)
+    return render_template("hit_strat.html", people=people)
+
+@main.route("/pit_strat")
+def pit_strat():
+    stat = request.args.get("stat")
+    if not stat:
+        stat = "_id"
+    people = load_people()
+    people = sort_people(stat, people)
+    return render_template("pit_strat.html", people=people)
 
 @main.route("/playerpage")
 def playerpage():
