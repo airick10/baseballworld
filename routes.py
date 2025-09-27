@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, current_app
-from .services import load_hitters, load_pitchers, load_people, get_person
+from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions
 
 
 
@@ -7,18 +7,9 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    return "<h1>Using Blueprint</h1>"
-
-@main.route("/json")
-def json():
-    hitters = load_hitters()
-    return render_template("json.html", hitters=hitters)
-
-@main.route("/pitcherjson")
-def pitcherjson():
-    pitchers = load_pitchers()
-    return render_template("pitcherjson.html", pitchers=pitchers)
-
+    #return "<h1>Using Blueprint</h1>"
+    return render_template("index.html")
+    
 @main.route("/all")
 def all_people():
     people = load_people()
@@ -33,7 +24,9 @@ def playerpage():
     person = get_person(kind, pid)
     if not person:
         abort(404)
-    return render_template("playerpage.html", person=person, kind=kind, pid=pid)
+    short = compute_short_pos(kind, person)   # derive from JSON fields
+    position = positions(short)
+    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position)
 
 # If you want the POST “Full” button to work for both kinds:
 @main.route("/playerpagefull", methods=["POST"])
@@ -45,7 +38,9 @@ def playerpagefull():
     person = get_person(kind, pid)
     if not person:
         abort(404)
-    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid)
+    short = compute_short_pos(kind, person)   # derive from JSON fields
+    position = positions(short)
+    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position)
 
 
 '''
