@@ -20,34 +20,57 @@
       height: 500px;
       position: relative;
     }
+
     .background_photo::before {
       content: "";
       position: absolute;
       inset: 0;
       background-color: rgba(0,0,0,0.5);
     }
+
     .small_background_photo {
       background-image: url("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Photos/{{ folder }}/{{ first }}_{{ last }}.jpg");
       background-size: cover;
       background-position: center;
       height: 400px;
     }
+
     .texturina-SemiBold {
       font-family: "Texturina", serif;
       font-optical-sizing: auto;
       font-weight: 600;
       font-style: normal;
     }
-    .photo_text_size { font-size: 55px; }
+
+    .photo_text_size { 
+        font-size: 55px; 
+    }
+
+    .script_background {
+      position: relative;
+      z-index: 0;   /* create stacking context */
+    }
+
+    .script_background::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Logos/scripts/{{ primary_team }}.png")
+                  no-repeat center;
+      background-size: contain;
+      opacity: 0.1;      /* adjust strength of watermark */
+      z-index: -1;       /* ensures it’s behind the text */
+    }
+
   </style>
 </head>
 <body>
 
   <div class="container-fluid">
     <div class="row align-items-start playerheader {{ primary_team }}_color">
-      <div class="col-2 text-start">Player A</div>
-      <div class="col-8 text-center">All Time Players</div>
-      <div class="col-2 text-end">Player B</div>
+      <div class="col-2 text-start"><img src="https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Logos/city/{{ primary_team }}.png" height="75" alt="{{ team }}"></div>
+      <div class="col-8 text-center"><a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-light" href="{{ url_for('main.all_people') }}">All Time Players</a></div>
+      <div class="col-2 text-end"><img src="https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Logos/city/{{ primary_team }}.png" height="75" alt="{{ team }}"></div>
     </div>
   </div>
 
@@ -74,40 +97,484 @@
       <div class="col-2 small_background_photo text-start">&nbsp;</div>
       <div class="col-10">
         <!-- Example quick facts; show if present -->
-        <div class="p-3">
-          <h3 class="mb-3">{{ kind|title }}</h3>
-          <p class="mb-1"><b>ID:</b> {{ pid }}</p>
-          {% if person.get('s_team') %}<p class="mb-1"><b>Card Team:</b> {{ person['s_team'] }}</p>{% endif %}
-          {% if person.get('Position') %}<p class="mb-1"><b>Position:</b> {{ person['Position'] }}</p>{% endif %}
+        <div class="p-3 script_background">
+          <h3 class="mb-3">{{ first }} {{ last }}</h3>
+          <p>
+          {% if person.get('Nickname') %}<p class="mb-1"><b>Nickname:</b> {{ person['Nickname'] }}</p>{% endif %}
           {% if person.get('Throws') %}<p class="mb-1"><b>Throws:</b> {{ person['Throws'] }}</p>{% endif %}
           {% if person.get('Bats') %}<p class="mb-1"><b>Bats:</b> {{ person['Bats'] }}</p>{% endif %}
+          {% if position %}<p class="mb-1"><b>Position:</b> {{ position }}</p>{% endif %}
+          {% if person.get('Height') %}<p class="mb-1"><b>Height:</b> {{ person['Height'] }}</p>{% endif %}
+          {% if person.get('Weight_lb') %}<p class="mb-1"><b>Weight:</b> {{ person['Weight_lb'] }}</p>{% endif %}
+          {% if person.get('HS_City') %}<p class="mb-1"><b>High School:</b> {{ person['HS_City'] }}</p>{% endif %}
+          {% if person.get('HS_State') %}<p class="mb-1"><b>State:</b> {{ person['HS_State'] }}</p>{% endif %}
+          {% if person.get('HS_Country') %}<p class="mb-1"><b>Nationality:</b> {{ person['HS_Country'] }}</p>{% endif %}
+          {% if person.get('BaseballReferenceURL') %}<p class="mb-1"><b>Baseball Ref:</b>  <a href="{{ person['BaseballReferenceURL'] }}" target="new_window">Link</a></p>{% endif %}
+          {% if person.get('s_team') %}<p class="mb-1"><b>Strat Team:</b> {{ person['s_team'] }}</p>{% endif %}
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Debug / flexible dump: table of all key-values -->
-  <div class="container my-4">
-    <h4>All Fields</h4>
-    <div class="table-responsive">
-      <table class="table table-sm table-striped">
-        <tbody>
-          {% for k, v in person.items() %}
-          <tr>
-            <th class="text-nowrap">{{ k }}</th>
-            <td>
-              {% if v is iterable and v is not string %}
-                {{ v | join(', ') if v is sequence else v }}
-              {% else %}
-                {{ v }}
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+<!-- 162 GAME AVG TABLE START -->
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-2">&nbsp;</div>
+      <div class="col-10">
+        {% if kind == "hitter" %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AB</th>
+                    <th>PA</th>
+                    <th>R</th>
+                    <th>HR</th>
+                    <th>RBI</th>
+                    <th>AVG</th>
+                    <th>OBP</th>
+                    <th>SLG</th>
+                    <th>OPS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('b_ab') if person.get('b_ab') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_pa') if person.get('b_pa') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_r') if person.get('b_r') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_hr') if person.get('b_hr') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_rbi') if person.get('s_b') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_batting_avg') if person.get('b_batting_avg') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_onbase_perc') if person.get('b_onbase_perc') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_slugging_perc') if person.get('b_slugging_perc') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_onbase_plus_slugging') if person.get('b_onbase_plus_slugging') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>H</th>
+                    <th>2B</th>
+                    <th>3B</th>
+                    <th>SB</th>
+                    <th>CS</th>
+                    <th>GIDP</th>
+                    <th>HBP</th>
+                    <th>SAC</th>
+                    <th>SF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('b_h') if person.get('b_h') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_doubles') if person.get('b_doubles') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_triples') if person.get('b_triples') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_sb') if person.get('b_sb') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_cs') if person.get('b_cs') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_gidp') if person.get('b_gidp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_hbp') if person.get('b_hbp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_sh') if person.get('b_sh') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_sf') if person.get('b_sf') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>BB</th>
+                    <th>SO</th>
+                    <th>IBB</th>
+                    <th>TB</th>
+                    <th>OBP+</th>
+                    <th>RBAT+</th>
+                    <th>ROBA</th>
+                    <th>WAR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('b_bb') if person.get('b_bb') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_so') if person.get('b_so') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('b_ibb') if person.get('b_ibb') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_tb') if person.get('b_tb') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_onbase_plus_slugging_plus') if person.get('b_onbase_plus_slugging_plus') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_rbat_plus') if person.get('b_rbat_plus') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_roba') if person.get('b_roba') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('b_war') if person.get('b_war') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+      </div>
+      {% else %}
+
+
+      <table class="table">
+            <thead>
+                <tr>
+                    <th>IP</th>
+                    <th>G</th>
+                    <th>GS</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>SV</th>
+                    <th>BB</th>
+                    <th>SO</th>
+                    <th>ERA</th>
+                    <th>WHIP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('p_ip') if person.get('p_ip') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_g') if person.get('p_g') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_gs') if person.get('p_gs') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_w') if person.get('p_w') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_l') if person.get('p_l') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_sv') if person.get('p_sv') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_bb') if person.get('p_bb') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_so') if person.get('p_so') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_earned_run_avg') if person.get('p_earned_run_avg') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_whip') if person.get('p_whip') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>BFP</th>
+                    <th>H</th>
+                    <th>R</th>
+                    <th>ER</th>
+                    <th>HR</th>
+                    <th>HBP</th>
+                    <th>BK</th>
+                    <th>WP</th>
+                    <th>FIP</th>
+                    <th>ERA+</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('p_bfp') if person.get('p_bfp') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_h') if person.get('p_h') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_r') if person.get('p_r') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_er') if person.get('p_er') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_hr') if person.get('p_hr') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_hbp') if person.get('p_hbp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_bk') if person.get('p_bk') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_wp') if person.get('p_wp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_fip') if person.get('p_fip') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_earned_run_avg_plus') if person.get('p_earned_run_avg_plus') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>GF</th>
+                    <th>CG</th>
+                    <th>SHO</th>
+                    <th>W/L %</th>
+                    <th>IBB</th>
+                    <th>H/9</th>
+                    <th>HR/9</th>
+                    <th>BB/9</th>
+                    <th>SO/9</th>
+                    <th>WAR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('p_gf') if person.get('p_gf') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_cg') if person.get('p_cg') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('p_sho') if person.get('p_sho') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_win_loss_perc') if person.get('p_win_loss_perc') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_ibb') if person.get('p_ibb') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_hits_per_nine') if person.get('p_hits_per_nine') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_hr_per_nine') if person.get('p_hr_per_nine') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_bb_per_nine') if person.get('p_bb_per_nine') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_so_per_nine') if person.get('p_so_per_nine') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('p_war') if person.get('p_war') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+      </div>
+
+      {% endif %}
+      
     </div>
   </div>
+
+
+<!-- 162 GAME AVG TABLE END -->
+
+
+
+
+
+<!-- STRAT O MATIC TABLE START -->
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-10">
+        {% if kind == "hitter" %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Side</th>
+                    <th>Stealing</th>
+                    <th>STL</th>
+                    <th>Speed</th>
+                    <th>Bunt</th>
+                    <th>Hit&Run</th>
+                    <th>Injury</th>
+                    <th>Side</th>
+                    <th>Salary</th>
+                    <th>WAR</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('Bats') if person.get('Bats') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_stealing') if person.get('s_stealing') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_stl') if person.get('s_stl') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_spd') if person.get('s_spd') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_b') if person.get('s_b') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_h') if person.get('s_h') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_inj') if person.get('s_inj') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bal') if person.get('s_bal') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_sal') if person.get('s_sal') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_war') if person.get('s_war') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AB</th>
+                    <th>SO v L</th>
+                    <th>BB v L</th>
+                    <th>HIT v L</th>
+                    <th>OB v L</th>
+                    <th>TB v L</th>
+                    <th>OBTB v L</th>
+                    <th>HR v L</th>
+                    <th>BP v L</th>
+                    <th>CL v L</th>
+                    <th>DP v L</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('s_ab') if person.get('s_ab') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_sovlhp') if person.get('s_sovlhp') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_bbvlhp') if person.get('s_bbvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hitvlhp') if person.get('s_hitvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obvlhp') if person.get('s_obvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_tbvlhp') if person.get('s_tbvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obtbvl') if person.get('s_obtbvl') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hrvlhp') if person.get('s_hrvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bpvlhp') if person.get('s_bpvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_clvlhp') if person.get('s_clvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_dpvlhp') if person.get('s_dpvlhp') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AB</th>
+                    <th>SO v R</th>
+                    <th>BB v R</th>
+                    <th>HIT v R</th>
+                    <th>OB v R</th>
+                    <th>TB v R</th>
+                    <th>OBTB v R</th>
+                    <th>HR v R</th>
+                    <th>BP v R</th>
+                    <th>CL v R</th>
+                    <th>DP v R</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('s_ab') if person.get('s_ab') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_sovrhp') if person.get('s_sovrhp') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_bbvrhp') if person.get('s_bbvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hitvrhp') if person.get('s_hitvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obvrhp') if person.get('s_obvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_tbvrhp') if person.get('s_tbvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obtbvr') if person.get('s_obtbvr') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hrvrhp') if person.get('s_hrvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bpvrhp') if person.get('s_bpvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_clvrhp') if person.get('s_clvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_dpvrhp') if person.get('s_dpvrhp') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>C</th>
+                    <th>1B</th>
+                    <th>2B</th>
+                    <th>SS</th>
+                    <th>3B</th>
+                    <th>LF</th>
+                    <th>CF</th>
+                    <th>RF</th>
+                    <th>Fielding</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('s_ca') if person.get('s_ca') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_1b') if person.get('s_1b') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_2b') if person.get('s_2b') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_ss') if person.get('s_ss') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_3b') if person.get('s_3b') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_lf') if person.get('s_lf') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_cf') if person.get('s_cf') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_rf') if person.get('s_rf') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_fielding') if person.get('s_fielding') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+      </div>
+      {% else %}
+
+
+      <table class="table">
+            <thead>
+                <tr>
+                    <th>Side</th>
+                    <th>Hold</th>
+                    <th>Endurance</th>
+                    <th>Fielding</th>
+                    <th>Balk</th>
+                    <th>Wild Pitch</th>
+                    <th>Hitting</th>
+                    <th>STL</th>
+                    <th>Speed</th>
+                    <th>Balance</th>
+                    <th>Salary</th>
+                    <th>WAR</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('Throws') if person.get('Throws') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_ho') if person.get('s_ho') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_endurance') if person.get('s_endurance') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_field') if person.get('s_field') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bk') if person.get('s_bk') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_wp') if person.get('s_wp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bat_b') if person.get('s_bat_b') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_stl') if person.get('s_stl') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_spd') if person.get('s_spd') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bal') if person.get('s_bal') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_sal') if person.get('s_sal') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_war') if person.get('s_war') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>IP</th>
+                    <th>SO v L</th>
+                    <th>BB v L</th>
+                    <th>HIT v L</th>
+                    <th>OB v L</th>
+                    <th>TB v L</th>
+                    <th>OBTB v L</th>
+                    <th>HR v L</th>
+                    <th>BP v L</th>
+                    <th>DP v L</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('s_ip') if person.get('s_ip') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_sovlhp') if person.get('s_sovlhp') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_bbvlhp') if person.get('s_bbvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hitvlhp') if person.get('s_hitvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obvlhp') if person.get('s_obvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_tbvlhp') if person.get('s_tbvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obtbvl') if person.get('s_obtbvl') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hrvlhp') if person.get('s_hrvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bpvlhp') if person.get('s_bpvlhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_dpvlhp') if person.get('s_dpvlhp') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AB</th>
+                    <th>SO v R</th>
+                    <th>BB v R</th>
+                    <th>HIT v R</th>
+                    <th>OB v R</th>
+                    <th>TB v R</th>
+                    <th>OBTB v R</th>
+                    <th>HR v R</th>
+                    <th>BP v R</th>
+                    <th>DP v R</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ person.get('s_ip') if person.get('s_ip') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_sovrhp') if person.get('s_sovrhp') else "&nbsp;" | safe }}</td>
+                    <td>{{ person.get('s_bbvrhp') if person.get('s_bbvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hitvrhp') if person.get('s_hitvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obvrhp') if person.get('s_obvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_tbvrhp') if person.get('s_tbvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_obtbvr') if person.get('s_obtbvr') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_hrvrhp') if person.get('s_hrvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_bpvrhp') if person.get('s_bpvrhp') else "&nbsp;" | safe}}</td>
+                    <td>{{ person.get('s_dpvrhp') if person.get('s_dpvrhp') else "&nbsp;" | safe}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+      </div>
+
+      {% endif %}
+      <div class="col-2">&nbsp;</div>
+    </div>
+  </div>
+
+
+<!-- STRAT O MATIC TABLE END -->
+
 
 </body>
 </html>
