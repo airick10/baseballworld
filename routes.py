@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort, current_app
-from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions, sort_people
+from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions, sort_people, pos_player_pool
 
 
 
@@ -50,6 +50,22 @@ def pit_strat():
     people = load_people()
     people = sort_people(stat, people)
     return render_template("pit_strat.html", people=people)
+
+@main.route("/position_pool")
+def position_pool():
+    people = load_people()
+    var_c = pos_player_pool("C", people)
+    var_1b = pos_player_pool("1B", people)
+    var_2b = pos_player_pool("2B", people)
+    var_3b = pos_player_pool("3B", people)
+    var_ss = pos_player_pool("SS", people)
+    var_lf = pos_player_pool("LF", people)
+    var_cf = pos_player_pool("CF", people)
+    var_rf = pos_player_pool("RF", people)
+    var_sp = pos_player_pool("SP", people)
+    var_rp = pos_player_pool("RP", people)
+    
+    return render_template("position_pool.html", people=people, var_c=var_c, var_1b=var_1b, var_2b=var_2b, var_ss=var_ss, var_3b=var_3b, var_lf=var_lf, var_cf=var_cf, var_rf=var_rf, var_sp=var_sp, var_rp=var_rp)
 
 @main.route("/playerpage")
 def playerpage():

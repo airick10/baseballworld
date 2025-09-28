@@ -1,5 +1,6 @@
 from flask import Flask
 import json
+import random
 from pathlib import Path
 from functools import lru_cache
 from operator import itemgetter
@@ -101,3 +102,15 @@ def sort_people(stat: str, people: dict):
         people.sort(key=lambda r: float(r.get(stat, 0) or 0))
 
     return people
+
+def pos_player_pool(pos: str, people: list[dict]) -> list[dict]:
+    # filter down to just this position
+    pool_temp = [h for h in people if h.get("short_pos") == pos]
+
+    # how many to take (20%)
+    num_players = round(len(pool_temp) * 0.2)
+
+    # pick random unique players
+    pool = random.sample(pool_temp, k=num_players) if num_players > 0 else []
+
+    return pool
