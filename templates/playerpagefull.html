@@ -9,7 +9,7 @@
   {% set first = person.get('FirstName','') %}
   {% set last  = person.get('LastName','') %}
   {% set teams = person.get('s_mlbteam', []) %}
-  {% set primary_team = teams[0] if teams else '' %}
+  {% set primary_team = teams[0] if teams and rand == 0 else (teams[1] if teams|length > 1 else teams[0]) %}
   {% set folder = 'Hitters' if kind == 'hitter' else 'Pitchers' %}
 
   <style>
@@ -40,6 +40,12 @@
       font-optical-sizing: auto;
       font-weight: 600;
       font-style: normal;
+      color: var(--bs-warning); /* Bootstrap gold */
+      text-shadow: 
+        0 0 4px #fff,       /* faint white glow */
+        0 0 3px #ffc107,    /* gold outer glow */
+        0 0 1px #ffda6a;   /* softer diffuse glow */
+      letter-spacing: 0.35em; /* tweak this value */
     }
 
     .photo_text_size { 
@@ -61,6 +67,26 @@
       opacity: 0.1;      /* adjust strength of watermark */
       z-index: -1;       /* ensures it’s behind the text */
     }
+
+
+
+    .alt_background {
+      position: relative;
+      z-index: 0;   /* create stacking context */
+    }
+
+    .alt_background::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Logos/alternate/{{ primary_team }}.png")
+                  no-repeat center;
+      background-size: contain;
+      opacity: 0.1;      /* adjust strength of watermark */
+      z-index: -1;       /* ensures it’s behind the text */
+    }
+
+
 
   </style>
 </head>
@@ -323,6 +349,15 @@
 
 
 
+<div class="container-fluid">
+    <div class="row align-items-start {{ primary_team }}_color" style="min-height: 400px">
+        <div class="p-3 alt_background" style="min-height: 370px">
+          &nbsp;
+        </div>
+  </div>
+
+
+
 
 
 <!-- STRAT O MATIC TABLE START -->
@@ -568,7 +603,7 @@
       </div>
 
       {% endif %}
-      <div class="col-2">&nbsp;</div>
+      <div class="col-2"><img src="https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/Photos/strat.png" style="width:110%"></div>
     </div>
   </div>
 

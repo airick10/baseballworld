@@ -47,125 +47,74 @@
   </style>
 </head>
 <body>
-<table class='table'>
-{% for v in var_c %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
+<p>
+<b>C</b> - <select name="c" method="GET" action="">
+    {% for v in var_c %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>1B</b> - <select name="1b" method="GET" action="">
+    {% for v in var_1b %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>2B</b> - <select name="2b" method="GET" action="">
+    {% for v in var_2b %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>SS</b> - <select name="ss" method="GET" action="">
+    {% for v in var_ss %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>3B</b> - <select name="3b" method="GET" action="">
+    {% for v in var_3b %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>LF</b> - <select name="lf" method="GET" action="">
+    {% for v in var_lf %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>CF</b> - <select name="cf" method="GET" action="">
+    {% for v in var_cf %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>RF</b> - <select name="rf" method="GET" action="">
+    {% for v in var_rf %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Bats','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>SP</b> - <select name="sp" method="GET" action="">
+    {% for v in var_sp %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Throws','') }} </option>
+    {% endfor %}
+</select>
+<p>
+<b>RP</b> - <select name="rp" method="GET" action="">
+    {% for v in var_rp %}
+        <option value="{{ v.get('ID', '') }}"> {{ v.get('FirstName','') }} {{ v.get('LastName','') }} - {{ v.get('Throws','') }} </option>"
+    {% endfor %}
+</select>
 
-<hr>
+<p>
+  <hr>
+  <p>
 
-<table class='table'>
-{% for v in var_1b %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
 
-<hr>
 
-<table class='table'>
-{% for v in var_2b %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
 
-<hr>
-
-<table class='table'>
-{% for v in var_ss %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_3b %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_lf %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_cf %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_rf %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_sp %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
-
-<table class='table'>
-{% for v in var_rp %}
-<tr>
-  <td>
-    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-50 link-underline-opacity-75-hover link-dark" href="{{ url_for('main.playerpage', kind=v.kind, id=v.id) }}">{{ v.get('FirstName','') }} {{ v.get('LastName','') }}</a>
-  <td>
-<tr>
- {% endfor %} 
-</table>
-
-<hr>
 
 </body>
 </html>
