@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, abort, current_app
 from .services import load_hitters, load_pitchers, load_people, get_person, compute_short_pos, positions, sort_people, pos_player_pool
+import random
 
 
 
@@ -78,7 +79,8 @@ def playerpage():
         abort(404)
     short = compute_short_pos(kind, person)   # derive from JSON fields
     position = positions(short)
-    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position)
+    k = random.randint(0, 1)
+    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position, rand=k)
 
 # If you want the POST “Full” button to work for both kinds:
 @main.route("/playerpagefull", methods=["POST"])
@@ -92,7 +94,8 @@ def playerpagefull():
         abort(404)
     short = compute_short_pos(kind, person)   # derive from JSON fields
     position = positions(short)
-    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position)
+    k = random.randint(0, 1)
+    return render_template("playerpagefull.html", person=person, kind=kind, pid=pid, position=position, rand=k)
 
 
 '''
