@@ -4,20 +4,42 @@ import random
 from pathlib import Path
 from functools import lru_cache
 from operator import itemgetter
+import requests
 
-input_file_h = Path(__file__).with_name("alltimebatters.json")
-input_file_p = Path(__file__).with_name("alltimepitchers.json")
+input_file_h = "https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimebatters.json"
+input_file_p = "https://filedn.com/limKzbrdG9qBWDCDLoyNoHF/files/alltimepitchers.json"
+
+def _read_json(src: str):
+    if src.startswith("http://") or src.startswith("https://"):
+        resp = requests.get(src, timeout=10)
+        resp.raise_for_status()
+        return resp.json()
+    p = Path(__file__).with_name(src)
+    with p.open(encoding="utf-8") as f:
+        return json.load(f)
+
+def _index_by_id(seq):
+    """
+    Convert a list of records to a dict keyed by 'ID' (string).
+    Ignores items that don't have an ID.
+    """
+    out = {}
+    for rec in seq:
+        # try common keys; adjust if your JSON uses a different one
+        _id = rec.get("ID") or rec.get("_id") or rec.get("id")
+        if _id is None:
+            continue
+        out[str(_id)] = rec
+    return out
 
 def load_hitters():
-    with input_file_h.open(encoding="utf-8") as f:
-        parsed = json.load(f)
-    # dict keyed by string ID (as in your JSON)
-    return {h["ID"]: h for h in parsed}
+    data = _read_json(input_file_h)  # likely a list
+    return _index_by_id(data) if isinstance(data, list) else data
 
 def load_pitchers():
-    with input_file_p.open(encoding="utf-8") as f:
-        parsed = json.load(f)
-    return {p["ID"]: p for p in parsed}
+    data = _read_json(input_file_p)  # likely a list
+    return _index_by_id(data) if isinstance(data, list) else data
+
 
 def load_people():
     """Combine hitters and pitchers into a single sorted LIST."""
