@@ -1,9 +1,8 @@
 pipeline {
 	agent {
-	docker 
-		{ 
-		image 'python:3.12-slim' // comes with python & pip
-		args '-v $HOME/.cache/pip:/root/.cache/pip' // optional pip cache 
+		docker { 
+			image 'python:3.12-slim' // comes with python & pip
+			args '-v $HOME/.cache/pip:/root/.cache/pip' // optional pip cache 
 		} 
 	}
 	stages {
@@ -17,7 +16,13 @@ pipeline {
 		
 		stage('Setup') {
 			steps {
-				sh "pip install -r requirements.txt"
+				sh '''
+				  set -eux
+				  python -m venv .venv
+				  . .venv/bin/activate
+				  python -m pip install --upgrade pip
+				  python -m pip install -r requirements.txt
+				'''
 			}
 		}
 	}
