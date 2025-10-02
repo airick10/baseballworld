@@ -1,5 +1,11 @@
 pipeline {
-	agent any
+	agent {
+	docker 
+		{ 
+		image 'python:3.12-slim' // comes with python & pip
+		args '-v $HOME/.cache/pip:/root/.cache/pip' // optional pip cache 
+		} 
+	}
 	stages {
 	
 		stage('Checkout') {
