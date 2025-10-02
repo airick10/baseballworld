@@ -1,14 +1,11 @@
 pipeline {
-	agent any
+	agent {
+    docker {
+      image 'python:3.12-slim'      // comes with python & pip
+      args '-v $HOME/.cache/pip:/root/.cache/pip' // optional pip cache
+    }
+  }
 	stages {
-		stage('Prep Python (ephemeral)') {
-		  steps {
-			sh '''
-			  sudo apt-get update -y
-			  sudo apt-get install -y python3 python3-venv python3-pip
-			'''
-		  }
-		}
 	
 		stage('Checkout') {
 			steps {
